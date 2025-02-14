@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程页面</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url(./img/bg_页面_1.png); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-repeat: no-repeat; 
+            background-size: cover; 
+            background-position: center; 
+        }
+        .container {
+            display: flex;
+            background-color: #555; 
+            border-radius: 30px;
+            overflow: hidden;
+            width: 1200px; 
+            height: 800px; 
+        }
+        .menu {
+            background-color: #ffcc66; 
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+        }
+        .menu-item {
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .menu-item:hover {
+            background-color: #ffe680;
+        }
+        .menu-item.active {
+            background-color: #fff;
+            color: #00bfa5;
+            font-weight: bold;
+            border-left: 5px solid #b22222;
+        }
+        .submenu {
+            display: none;
+            flex-direction: column;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        .submenu.show {
+            display: flex;
+        }
+        .submenu-item {
+            padding: 10px;
+            margin: 5px 0;
+            text-align: left;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submenu-item:hover {
+            background-color: #ffe680;
+        }
+        .submenu-item.active {
+            background-color: #fff;
+            color: #00bfa5;
+            font-weight: bold;
+            border-left: 5px solid #b22222;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+
+        /* 针对iPad的样式优化 */
+        @media (min-device-width: 768px) and (max-device-width: 1024px) {
+            .container {
+                width: 1200px; 
+                height: 800px; 
+            }
+            .menu {
+                width: 250px; 
+                padding: 20px; 
+            }
+            .menu-item, .submenu-item {
+                padding: 15px; 
+                font-size: 16px; 
+            }
+            .content {
+                padding: 20px; 
+            }
+        }
+
+        /* CSS 交互逻辑 */
+        input[type="radio"] {
+            display: none;
+        }
+        input[type="radio"]:checked + .menu-item {
+            background-color: #fff;
+            color: #00bfa5;
+            font-weight: bold;
+            border-left: 5px solid #b22222;
+        }
+        input[type="radio"]:checked + .menu-item + .submenu {
+            display: flex;
+        }
+        .submenu-item input[type="radio"]:checked + .submenu-item {
+            background-color: #fff;
+            color: #00bfa5;
+            font-weight: bold;
+            border-left: 5px solid #b22222;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <label>
+                <input type="radio" name="menu" onclick="showContent('课程介绍')">
+                <div class="menu-item">课程介绍</div>
+            </label>
+            <label>
+                <input type="radio" name="menu" onclick="toggleSubmenu(this)">
+                <div class="menu-item">启蒙班</div>
+                <div class="submenu">
+                    <label>
+                        <input type="radio" name="submenu" onclick="showContent('任课老师')">
+                        <div class="submenu-item">任课老师</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="submenu" onclick="showContent('课堂展示')">
+                        <div class="submenu-item">课堂展示</div>
+                    </label>
+                </div>
+            </label>
+            <label>
+                <input type="radio" name="menu" onclick="showContent('初级班')">
+                <div class="menu-item">初级班</div>
+            </label>
+            <label>
+                <input type="radio" name="menu" onclick="showContent('初中班级')">
+                <div class="menu-item">初中班级</div>
+            </label>
+        </div>
+        <div class="content" id="content">
+            <!-- 这里是内容区域 -->
+        </div>
+    </div>
+    <script>
+        function showContent(content) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = `<h1>${content}</h1><p>这里是${content}的内容。</p>`;
+        }
+
+        function toggleSubmenu(input) {
+            // 收起所有子菜单
+            const allSubmenus = document.querySelectorAll('.submenu');
+            allSubmenus.forEach(submenu => submenu.classList.remove('show'));
+            
+            // 展开当前子菜单
+            const submenu = input.nextElementSibling.nextElementSibling;
+            submenu.classList.add('show');
+        }
+    </script>
+</body>
+</html>
+``` ▋
